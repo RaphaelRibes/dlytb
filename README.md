@@ -97,7 +97,18 @@ The commands to use this script are the same across Windows, macOS, and Linux. Y
 
 By default, the downloaded files will be saved in the directory where you run the command.
 
-### Download Video
+### Running the Graphical User Interface (UI)
+
+For an easier experience, you can launch the graphical user interface. 
+This allows you to paste a URL, choose your download options, and select a save location without using command-line arguments.
+
+```bash
+pixi run python gui.py
+```
+
+### Command-Line Usage
+
+#### Download Video
 
 To download a video in the highest available quality, use the `dlvideo` task. You need to pass the YouTube URL as an argument.
 
@@ -111,7 +122,7 @@ pixi run dlvideo <youtube_url>
 pixi run dlvideo "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ```
 
-### Download Audio
+#### Download Audio
 
 To download only the audio track, use the `dlaudio` task. The default format is `mp3`.
 

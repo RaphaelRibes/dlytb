@@ -103,7 +103,7 @@ For an easier experience, you can launch the graphical user interface.
 This allows you to paste a URL, choose your download options, and select a save location without using command-line arguments.
 
 ```bash
-pixi run python gui.py
+pixi run gui
 ```
 
 ### Command-Line Usage

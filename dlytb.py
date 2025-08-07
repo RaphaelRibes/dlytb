@@ -4,18 +4,6 @@ import subprocess
 import re
 import argparse
 from pytubefix import YouTube
-from tqdm import tqdm
-
-class TqdmYouTube(YouTube):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.pbar = None
-    def on_progress(self, stream, chunk, bytes_remaining):
-        if self.pbar is None: self.pbar = tqdm(total=stream.filesize, unit='B', unit_scale=True, desc="Téléchargement")
-        downloaded = stream.filesize - bytes_remaining
-        self.pbar.update(downloaded - self.pbar.n)
-    def on_complete(self, stream, file_path):
-        if self.pbar: self.pbar.close()
 
 def sanitize_filename(title, extension):
     """Nettoie un titre pour en faire un nom de fichier sûr."""
@@ -45,7 +33,7 @@ def run_ffmpeg_command(command, action_desc):
 
 def telecharger_audio_seulement(url, audio_format, num_cores, output_dir):
     try:
-        yt = TqdmYouTube(url)
+        yt = YouTube(url)
         print(f"Préparation de l'audio pour : {yt.title}")
         audio_stream = yt.streams.get_audio_only()
         if not audio_stream:
@@ -53,7 +41,11 @@ def telecharger_audio_seulement(url, audio_format, num_cores, output_dir):
             return
 
         os.makedirs(output_dir, exist_ok=True)
+        
+        print("Téléchargement du flux audio...")
         temp_audio_path = audio_stream.download(filename="temp_audio_file.temp")
+        print("Téléchargement terminé.")
+
         output_filename = sanitize_filename(yt.title, audio_format)
         output_filepath = os.path.join(output_dir, output_filename)
         
@@ -71,7 +63,7 @@ def telecharger_audio_seulement(url, audio_format, num_cores, output_dir):
 
 def telecharger_haute_qualite_video(url, output_dir):
     try:
-        yt = TqdmYouTube(url)
+        yt = YouTube(url)
         print(f"Préparation de la vidéo pour : {yt.title}")
         video_stream = yt.streams.filter(adaptive=True, file_extension='mp4').order_by('resolution').desc().first()
         audio_stream = yt.streams.get_audio_only()
@@ -80,8 +72,12 @@ def telecharger_haute_qualite_video(url, output_dir):
              return
 
         os.makedirs(output_dir, exist_ok=True)
+        
+        print("Téléchargement du flux vidéo...")
         temp_video_path = video_stream.download(filename="temp_video_file.temp")
+        print("Téléchargement du flux audio...")
         temp_audio_path = audio_stream.download(filename="temp_audio_file.temp")
+        print("Téléchargements terminés.")
         
         output_filename = sanitize_filename(yt.title, "mp4")
         output_filepath = os.path.join(output_dir, output_filename)

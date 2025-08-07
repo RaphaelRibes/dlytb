@@ -1,0 +1,17 @@
+[workspace]
+channels = ["conda-forge"]
+name = "dlytb"
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+dlvideo = "python -s dlytb.py $INIT_CWD"
+dlaudio = "python -s dlytb.py -a $INIT_CWD"
+
+[dependencies]
+python = ">=3.9,<3.13"
+ffmpeg = ">=7.1.0,<8"
+tqdm = ">=4.67.1,<5"
+
+[pypi-dependencies]
+pytubefix = ">=9.4.1, <10"

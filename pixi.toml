@@ -2,12 +2,11 @@
 channels = ["conda-forge"]
 name = "dlytb"
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
-version = "1.1.1"
+version = "1.2.0"
 
 [tasks]
 dlvideo = "python -s dlytb.py $INIT_CWD"
 dlaudio = "python -s dlytb.py --audio $INIT_CWD"
-gui = "python gui.py"
 
 [dependencies]
 python = ">=3.9,<3.13"

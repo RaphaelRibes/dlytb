@@ -54,7 +54,6 @@ class App(tk.Tk):
         thread = threading.Thread(target=self.run_download, args=(url, output_path))
         thread.start()
 
-    # MODIFIED: The function now accepts the url and output_path arguments
     def run_download(self, url, output_path):
         download_type = self.download_type.get()
         

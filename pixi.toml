@@ -4,13 +4,16 @@ name = "dlytb"
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 version = "1.2.0"
 
-[tasks]
+[feature.dlytb.tasks]
 dlvideo = "python -s dlytb.py $INIT_CWD"
 dlaudio = "python -s dlytb.py --audio $INIT_CWD"
 
-[dependencies]
+[feature.dlytb.dependencies]
 python = ">=3.9,<3.13"
 ffmpeg = ">=7.1.0,<8"
 
-[pypi-dependencies]
+[feature.dlytb.pypi-dependencies]
 pytubefix = ">=9.4.1, <10"
+
+[environments]
+dlytb = {features = ["dlytb"], no-default-feature = true}
